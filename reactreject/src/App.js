@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import React, { Component } from 'react';
+import { connect } from 'react-redux'
+import { ageUpAction, ageDownAction } from './store/actions/ageAction'
+class App extends Component{
+  render() {
+    return (
+      <div className="App">
+        <h1>About venkatesan</h1>
+        <div>
+          <div>Venkat age is <span>{this.props.age}</span></div>
+          <button onClick={this.props.onAgeUp}>Age up</button>
+          <button onClick={this.props.onAgeDown}>Age down</button>
+        </div>
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    onAgeUp: () => dispatch(ageUpAction()),
+    onAgeDown: () => dispatch(ageDownAction())
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    age: state.age
+  }
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);
